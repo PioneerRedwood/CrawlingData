@@ -17,12 +17,19 @@ link_list = []
 
 delay = 0.5
 
-browser = webdriver.Chrome('chromedriver.exe')
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('disable-gpu')
+options.add_argument('lang=ko_KR')
+
+browser = webdriver.Chrome('chromedriver.exe', options=options)
 
 with open('2020_상세페이지_링크리스트.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
     for line in reader:
         link_list.append(line[1])
+
+table_list = []
 
 for link in link_list:
     browser.get(link)
@@ -31,43 +38,39 @@ for link in link_list:
     # 웹페이지 구조 분석
     # 여러 테이블, thead 태그가 있어도 안이 비어있는 경우도 있음
     # tr 안에 td 혹은 th가 들어있는 경우가 있음 어느 경우든 row 가져와야함
+    # box_flop / table / tbody / tr / th 혹은 td
+    # thead(요소 이름) 안에는 tr / th 방식으로 저장됨
     # get tables
     #     get thead - append
     #     get tbody
     #       get tr - append
+    th_flag = False
     try:
-
         tables = browser.find_elements_by_tag_name('table')
         for table in tables:
-            ths = table.find_elements_by_xpath('.//th[@scope="col"]')
-            for th in ths:
-                print(th.text)
+
+            # get thead(th)
+            if not th_flag:
+                theads = table.find_elements_by_tag_name('thead')
+                for thead in theads:
+                    ths = []
+                    for th in thead.find_elements_by_tag_name('th'):
+                        if th != '':
+                            ths.append(th.text)
+                    print(ths)
+                    table_list.append(ths)
+
+            tds = []
+            tbodies = table.find_elements_by_tag_name('tbody')
+            #           get td
+            for body in tbodies:
+                for td in body.find_elements_by_tag_name('td'):
+                    if td.text != '':
+                        tds.append(td.text)
+                print(tds)
+            table_list.append(tds)
 
     except:
         print('error')
 
-    # for value in range(1, 22):
-    #     # 이동
-    #     browser.get(link_str + str(value))
-    #     time.sleep(delay)
-    #
-    #     tbody = browser.find_element_by_tag_name('table').find_element_by_tag_name('tbody')
-    #
-    #     try:
-    #         trs = tbody.find_elements_by_tag_name('tr')
-    #
-    #         i = 0
-    #         for tr in trs:
-    #             name = tr.find_elements_by_tag_name('td')[2].text
-    #             link = tr.find_elements_by_tag_name('td')[1]\
-    #                 .find_elements_by_xpath('//a[@class="authCtrl"]')[i].get_attribute('onclick')
-    #             i += 2
-    #             table_list.append(name)
-    #             table_list.append(origin_link + link[9:len(link)-3])
-    #
-    #             # writer.writerow(table_list)
-    #             print(table_list)
-    #             table_list = []
-    #
-    #     except:
-    #         print('error')
+browser.quit()
