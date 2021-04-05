@@ -1,76 +1,151 @@
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
-from selenium.webdriver.support.select import Select
+# from selenium.webdriver.support.select import Select
 import time
 import csv
 import os
 
-origin_link = 'https://franchise.ftc.go.kr'
+# origin_link = 'https://franchise.ftc.go.kr'
+# link = 'https://franchise.ftc.go.kr/mnu/00013/program/userRqst/view.do?firMstSn=100480'
 
-# 링크 주소(애초에 검색 내용(필터)이 담김)
-link_str =\
-    "https://franchise.ftc.go.kr/mnu/00013/program/userRqst/list.do?" \
-    "searchCondition=&searchKeyword=&column=tNm&selUpjong=21&selIndus=&pageUnit=300&pageIndex="
+delay = 0.5
+timeout = 3
 
-# onclick='https://franchise.ftc.go.kr/mnu/00013/program/userRqst/view.do?firMstSn=78779'
+browser = webdriver.Chrome('chromedriver.exe')
 
 link_list = []
 
-delay = 0.5
-
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-options.add_argument('disable-gpu')
-options.add_argument('lang=ko_KR')
-
-browser = webdriver.Chrome('chromedriver.exe', options=options)
-
-with open('2020_상세페이지_링크리스트.csv', 'r', encoding='utf-8-sig', newline='') as f:
+# 갱신 필요 - 꽤 상세 페이지 목록은 꽤 자주 바뀜 2021.04.05 월 최신화
+with open('2020_정보공개서_상세.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
+    idx = 0
     for line in reader:
-        link_list.append(line[1])
+        if idx == 0:
+            print(line)
+            idx += 1
+        else:
+            link_list.append(line[6])
 
+header_list = []
 table_list = []
+with open('2020_정보공개서_상세열람_#1.csv', 'w', encoding='utf-8-sig', newline='') as f:
+    writer = csv.writer(f)
 
-for link in link_list:
-    browser.get(link)
-    time.sleep(delay)
+    flag = False
+    for link in link_list[0:500]:
+        browser.get(link)
+        time.sleep(delay)
+        try:
+            # tables = WebDriverWait(browser, timeout).until(lambda x: x.find_elements_by_tag_name('table'))
+            tables = browser.find_elements_by_tag_name('table')
+            time.sleep(delay)
 
-    # 웹페이지 구조 분석
-    # 여러 테이블, thead 태그가 있어도 안이 비어있는 경우도 있음
-    # tr 안에 td 혹은 th가 들어있는 경우가 있음 어느 경우든 row 가져와야함
-    # box_flop / table / tbody / tr / th 혹은 td
-    # thead(요소 이름) 안에는 tr / th 방식으로 저장됨
-    # get tables
-    #     get thead - append
-    #     get tbody
-    #       get tr - append
-    th_flag = False
-    try:
-        tables = browser.find_elements_by_tag_name('table')
-        for table in tables:
+            # data header
+            if not flag:
+                ths = []
+                table_idx = 0
+                for table in tables:
 
-            # get thead(th)
-            if not th_flag:
-                theads = table.find_elements_by_tag_name('thead')
-                for thead in theads:
-                    ths = []
-                    for th in thead.find_elements_by_tag_name('th'):
-                        if th != '':
-                            ths.append(th.text)
-                    print(ths)
-                    table_list.append(ths)
+                    # table#3, 6, 8, 10 skip
+                    if table_idx == 3 or table_idx == 6 or table_idx == 8 or table_idx == 10:
+                        table_idx += 1
+                        continue
 
+                    # table#16 가맹계약 기간
+                    if table_idx == 15:
+                        trs = table.find_element_by_tag_name('tbody').find_elements_by_tag_name('tr')
+                        for tr in trs:
+                            if tr == trs[1]:
+                                for th in tr.find_elements_by_tag_name('th'):
+                                    if th.text != '':
+                                        ths.append(th.text + ' 계약기간')
+                        continue
+
+                    # table#7 가맹점 변동 현황
+                    # thead 있고 tbody 빈거 하나 tbody 하나 더
+                    if table_idx == 7:
+                        temp_list = []
+                        for th in table.find_element_by_tag_name('thead').find_elements_by_tag_name('th'):
+                            if th.text != '' and '연도' not in th.text:
+                                temp_list.append(th.text)
+                        tbody = table.find_elements_by_tag_name('tbody')[1]
+                        trs = tbody.find_elements_by_tag_name('tr')
+                        for tr in trs:
+                            for temp in temp_list:
+                                ths.append(tr.find_elements_by_tag_name('td')[0].text + '년 ' + temp)
+                        table_idx += 1
+                        continue
+
+                    # from thead
+                    theads = table.find_elements_by_tag_name('thead')
+                    for thead in theads:
+                        trs = thead.find_elements_by_tag_name('tr')
+                        for tr in trs:
+                            for th in tr.find_elements_by_tag_name('th'):
+                                if th.text != '':
+                                    ths.append(th.text)
+
+                    # from tbody
+                    tbody_ths = table.find_elements_by_tag_name('tbody')
+                    for tbody in tbody_ths:
+                        trs = tbody.find_elements_by_tag_name('tr')
+
+                        # table#2(가맹본부 재무상황)
+                        if table_idx == 2:
+                            temp_list = []
+                            for tr in trs:
+                                if tr == trs[0]:
+                                    for th in tr.find_elements_by_tag_name('th'):
+                                        if th != tr.find_elements_by_tag_name('th')[0]:
+                                            temp_list.append(th.text)
+                                else:
+                                    for temp in temp_list:
+                                        ths.append(tr.find_elements_by_tag_name('td')[0].text + '년 ' + temp)
+                        else:
+                            for tr in trs:
+                                for th in tr.find_elements_by_tag_name('th'):
+                                    if th.text != '':
+                                        ths.append(th.text)
+
+                    table_idx += 1
+                if len(ths) > 0 and ths not in header_list:
+                    header_list.append(ths)
+                    print(len(ths), ths)
+                    writer.writerow(ths)
+                    flag = True
+
+            # data
             tds = []
-            tbodies = table.find_elements_by_tag_name('tbody')
-            #           get td
-            for body in tbodies:
-                for td in body.find_elements_by_tag_name('td'):
-                    if td.text != '':
-                        tds.append(td.text)
-                print(tds)
-            table_list.append(tds)
+            table_idx = 0
+            for table in tables:
+                if table_idx == 3 or table_idx == 6 or table_idx == 8 or table_idx == 10:
+                    table_idx += 1
+                    continue
+                for tbody in table.find_elements_by_tag_name('tbody'):
+                    for tr in tbody.find_elements_by_tag_name('tr'):
+                        list_td = tr.find_elements_by_tag_name('td')
+                        for td in list_td:
+                            if table_idx == 2 or table_idx == 7:
+                                if td == list_td[0]:
+                                    continue
+                                else:
+                                    if td.text != '':
+                                        tds.append(td.text)
+                            else:
+                                if td.text != '':
+                                    tds.append(td.text)
+                table_idx += 1
 
-    except:
-        print('error')
+            if len(tds) > 0:
+                print(len(tds), tds)
+                writer.writerow(tds)
+            table_list = []
 
-browser.quit()
+        except NoSuchElementException:
+            print('exception: There is no such element..')
+        except TimeoutError:
+            print('exception: timeout..')
+
+    browser.quit()
+print('complete')

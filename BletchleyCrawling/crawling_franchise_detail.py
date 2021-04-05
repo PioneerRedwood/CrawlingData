@@ -5,7 +5,6 @@ import csv
 
 origin_link = 'https://franchise.ftc.go.kr'
 
-# 세부 페이지 들어가는거 테스트
 link_str =\
     "https://franchise.ftc.go.kr/mnu/00013/program/userRqst/list.do?" \
     "searchCondition=&searchKeyword=&column=tNm&selUpjong=21&selIndus=&pageUnit=300&pageIndex="
@@ -60,3 +59,5 @@ with open('2020_정보공개서_상세.csv', 'w', encoding='utf-8-sig', newline=
 
         except:
             print('error')
+
+print('complete')
