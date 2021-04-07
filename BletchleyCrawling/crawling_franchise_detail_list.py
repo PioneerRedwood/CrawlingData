@@ -28,11 +28,10 @@ with open('2020_PublicInfoDetails.csv', 'r', encoding='utf-8-sig', newline='') a
 print('분석할 페이지 수: ', len(link_list))
 
 table_list = []
-with open('2020_PageDetail_#1.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('2020_PageDetail_#4.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
 
-    # 1차 0 ~ 50
-    for link in link_list[0:50]:
+    for link in link_list[3000:]:
         browser.get(link)
         time.sleep(delay)
         try:
