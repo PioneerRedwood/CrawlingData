@@ -10,17 +10,17 @@ list_1 = []
 list_2 = []
 list_3 = []
 
-with open('2020_브랜드개요.csv', 'r', encoding='utf-8-sig') as f:
+with open('DeprecatedFiles/2020_BrandSummary.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.reader(f)
     for line in reader:
         list_1.append(line)
 
-with open('2020_가맹점현황정보.csv', 'r', encoding='utf-8-sig') as f:
+with open('DeprecatedFiles/2020_FranchiseStatusInfo.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.reader(f)
     for line in reader:
         list_2.append(line)
 
-with open('2020_가맹점창업비용.csv', 'r', encoding='utf-8-sig') as f:
+with open('DeprecatedFiles/2020_FranchiseFoundationCost.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.reader(f)
     for line in reader:
         list_3.append(line)
@@ -43,9 +43,9 @@ for row1 in list_1:
                 row1.append(row3[i])
             break
 
-with open('2020_정보공개서_데이터.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('2020_PublicInfo_TotalData.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     for line in list_1:
         writer.writerow(line)
 
-print(os.stat('2020_정보공개서_데이터.csv').st_size)
+print(os.stat('2020_PublicInfo_TotalData.csv').st_size)
