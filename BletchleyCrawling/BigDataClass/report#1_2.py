@@ -52,6 +52,7 @@ sector_dic = {'한식': 'Q01', '중식': 'Q02', '일식': 'Q03', '분식': 'Q04'
 city_dic = {'강원': '42', '경기': '41', '경남': '48', '경북': '47', '광주': '29', '대구': '27', '대전': '30', '부산': '26', '서울': '11',
             '세종': '36', '울산': '31', '인천': '28',
             '전남': '46', '전북': '45', '제주': '50', '충청': '44', '충북': '43'}
+key = '41'
 
 # define flow 도시 -> 업종 -> 페이지 수만큼
 total = 0
@@ -71,7 +72,7 @@ with open('Gyeonggi.csv', 'w', encoding='utf-8-sig', newline='') as f:
             + '&indsLclsCd=Q' \
             + '&numOfRows=100' \
             + '&type=json' \
-            + '&key=' + '41' \
+            + '&key=' + key \
             + '&indsMclsCd=' + sector_dic[sector]
 
         request = urllib.request.Request(url + params)
@@ -92,7 +93,9 @@ with open('Gyeonggi.csv', 'w', encoding='utf-8-sig', newline='') as f:
                 idx += 1
                 table_row.append(item['indsMclsNm'])
                 table_row.append(item['bizesNm'])
-                table_row.append(item['rdnmAdr'])
+                table_row.append(item['ctprvnNm'])
+                table_row.append(item['signguNm'])
+                table_row.append(item['adongNm'])
                 table_row.append(item['lon'])
                 table_row.append(item['lat'])
 
@@ -112,7 +115,7 @@ with open('Gyeonggi.csv', 'w', encoding='utf-8-sig', newline='') as f:
                 + '&indsLclsCd=Q' \
                 + '&numOfRows=100' \
                 + '&type=json' \
-                + '&key=' + '11' \
+                + '&key=' + key \
                 + '&indsMclsCd=' + sector_dic[sector] \
                 + '&pageNo=' + str(i)
 
