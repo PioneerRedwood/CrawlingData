@@ -134,7 +134,9 @@ with open('Gyeonggi.csv', 'w', encoding='utf-8-sig', newline='') as f:
                     idx += 1
                     table_row.append(item['indsMclsNm'])
                     table_row.append(item['bizesNm'])
-                    table_row.append(item['rdnmAdr'])
+                    table_row.append(item['ctprvnNm'])
+                    table_row.append(item['signguNm'])
+                    table_row.append(item['adongNm'])
                     table_row.append(item['lon'])
                     table_row.append(item['lat'])
 
