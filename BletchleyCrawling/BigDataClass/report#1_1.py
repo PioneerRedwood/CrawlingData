@@ -6,10 +6,8 @@ import urllib.request
 client_id = "sZiKXpihvQDigy9xtYNC"
 client_secret = "f4MMLYZbDt"
 
-# encText = urllib.parse.quote("아이유")
 encText = urllib.parse.quote("빅데이터")
 encParam = urllib.parse.quote("100")
-# url = "https://openapi.naver.com/v1/search/blog.json?query=" + encText
 url = "https://openapi.naver.com/v1/search/news.json?query=" + encText
 
 # request parameter 추가적인 파라미터 사이에 '&' 붙여주기

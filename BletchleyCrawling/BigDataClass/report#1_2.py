@@ -1,5 +1,4 @@
 # 빅데이터 수업 과제 #1_2
-
 import urllib.request
 import urllib.parse
 import pandas as pd
@@ -58,7 +57,7 @@ key = '41'
 total = 0
 total_list = []
 
-with open('Gyeonggi.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('Gyeonggi2.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
 
     for sector in sector_dic:
