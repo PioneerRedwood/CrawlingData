@@ -2,21 +2,27 @@
 import csv
 import os
 
-oldList = []
-newList = []
 
-with open('2020_brand_03.csv', 'r', encoding='utf-8-sig') as f:
+valid_brand_list = []
+with open('2020_PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig') as f:
+    brand_name_list = []
     reader = csv.reader(f)
-    for line in reader:
-        oldList.append(line)
+    i = 0
+    for row in reader:
+        if i == 0:
+            valid_brand_list.append(row)
+            i += 1
+            continue
 
-with open('DeprecatedFiles/2020_FranchiseStatusInfo.csv', 'w', encoding='utf-8-sig', newline='') as new_f:
-    writer = csv.writer(new_f)
-    for line in oldList:
-        if line not in newList:
-            newList.append(line)
-            writer.writerow(line)
+        if [row[1], row[2]] not in brand_name_list:
+            valid_brand_list.append(row)
+            brand_name_list.append([row[1], row[2]])
 
-print(os.stat('2020_brand_03.csv').st_size)
-print(os.stat('DeprecatedFiles/2020_FranchiseStatusInfo.csv').st_size)
+print(len(valid_brand_list))
 
+with open('PublicInfo_TotalData.csv', 'w', encoding='utf-8-sig', newline='') as f:
+    writer = csv.writer(f)
+    for row in valid_brand_list:
+        writer.writerow(row)
+
+print('complete')
