@@ -26,7 +26,7 @@ with open('..//PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig', newline='')
         for row in reader:
             if i == 0:
                 i += 1
-                writer.writerow([row[0], row[1], row[4], row[5], row[12], row[18], '개점률', '폐점률'])
+                writer.writerow([row[0], row[1], '가맹사업 개월수', row[5], '평균매출액', '창업비용', '개점률', '폐점률'])
                 continue
 
             # row[4]:가맹점수, [8]:신규개점, [9]:계약종료, [10]:계약해지
@@ -43,18 +43,46 @@ with open('..//PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig', newline='')
                     temp = data
                 temp_row.append(int(temp))
 
-            num_of_opening = 0
-            num_of_closing = 0
+            opening_rate = 0
+            closing_rate = 0
             if temp_row[0] == 0:
-                num_of_opening = 0
+                opening_rate = 0
             else:
-                num_of_opening = temp_row[1] / temp_row[0]
+                opening_rate = temp_row[1] / temp_row[0]
 
             if temp_row[0] == 0:
-                num_of_closing = 0
+                closing_rate = 0
             else:
-                num_of_closing = temp_row[2] + temp_row[3] / temp_row[0]
-            writer.writerow([row[0], row[1], row[4], row[5], row[12], row[18],
-                             round(num_of_opening * 100, 2), round(num_of_closing * 100, 2)])
+                closing_rate = temp_row[2] + temp_row[3] / temp_row[0]
+
+            col_2 = 0
+            if row[4].split(' '):
+                arr = row[4].split(' ')
+                col_2 += int(arr[0][:1]) * 12
+                if '개' in arr[1][:2]:
+                    col_2 += int(arr[1][:1])
+                else:
+                    col_2 += int(arr[1][:2])
+
+            col_4 = ''
+            if ',' in row[12]:
+                arr = row[12].split(',')
+                for i in range(len(arr)):
+                    col_4 += arr[i]
+            else:
+                col_4 = 0
+
+            col_5 = ''
+            if '\n' in row[18]:
+                arr = row[18].split('\n')[0]
+                if ',' in arr:
+                    temp = arr.split(',')
+                    for i in range(len(temp)):
+                        col_5 += temp[i]
+            else:
+                col_5 = 0
+
+            writer.writerow([row[0], row[1], col_2, row[5], col_4, col_5,
+                             round(opening_rate * 100, 2), round(closing_rate * 100, 2)])
 
 print('complete')
