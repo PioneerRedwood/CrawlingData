@@ -43,9 +43,9 @@ for row1 in list_1:
                 row1.append(row3[i])
             break
 
-with open('2020_PublicInfo_TotalData.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('DeprecatedFiles/2020_PublicInfo_TotalData.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     for line in list_1:
         writer.writerow(line)
 
-print(os.stat('2020_PublicInfo_TotalData.csv').st_size)
+print(os.stat('DeprecatedFiles/2020_PublicInfo_TotalData.csv').st_size)

@@ -15,7 +15,7 @@ table_list = []
 column_list = []
 
 prev = time.process_time()
-with open('2020_PublicInfoDetails.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('DeprecatedFiles/2020_PublicInfoDetails.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     browser = webdriver.Chrome('chromedriver.exe')
 

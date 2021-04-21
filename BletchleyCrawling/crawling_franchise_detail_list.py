@@ -17,7 +17,7 @@ browser = webdriver.Chrome('chromedriver.exe')
 link_list = []
 
 # 갱신 필요 - 꽤 상세 페이지 목록은 꽤 자주 바뀜 2021.04.05 월 최신화
-with open('2020_PublicInfoDetails.csv', 'r', encoding='utf-8-sig', newline='') as f:
+with open('DeprecatedFiles/2020_PublicInfoDetails.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
     idx = 0
     for line in reader:

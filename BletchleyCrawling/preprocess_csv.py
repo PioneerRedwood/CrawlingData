@@ -4,7 +4,7 @@ import os
 
 
 valid_brand_list = []
-with open('2020_PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig') as f:
+with open('DeprecatedFiles/2020_PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig') as f:
     brand_name_list = []
     reader = csv.reader(f)
     i = 0
