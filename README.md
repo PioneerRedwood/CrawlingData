@@ -44,7 +44,6 @@ analysis_2nd.csv, analysis_2nd.py
 - 3907개의 브랜드가 전국에 몇개 있는지 약 76만개에서 데이터 추출, 약 12만개 추출.
 
 
-
-## AI와 데이터 분석
-
-### Clustering ? Multi-label classification ?
+## 데이터 분류
+그동안 모아온 데이터들을 몇개의 테마 혹은 클래스로 분류해야한다.
+테마 만들기, 클러스터링 등 다양한 주제가 논의됨.
