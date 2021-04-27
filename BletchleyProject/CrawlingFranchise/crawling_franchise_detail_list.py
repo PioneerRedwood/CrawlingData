@@ -1,3 +1,9 @@
+"""
+정보공개서 열람
+    가맹 브랜드 상세 열람 페이지 크롤링
+
+
+"""
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
@@ -17,7 +23,7 @@ browser = webdriver.Chrome('chromedriver.exe')
 link_list = []
 
 # 갱신 필요 - 꽤 상세 페이지 목록은 꽤 자주 바뀜 2021.04.05 월 최신화
-with open('DeprecatedFiles/2020_PublicInfoDetails.csv', 'r', encoding='utf-8-sig', newline='') as f:
+with open('../DeprecatedCSVs/2020_PublicInfoDetails.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
     idx = 0
     for line in reader:

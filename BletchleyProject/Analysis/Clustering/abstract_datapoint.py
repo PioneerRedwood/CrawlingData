@@ -15,7 +15,7 @@ import csv
 # 0, 1, 4, 5, 12, 18, 개, 폐점률
 
 total_list = []
-with open('..//PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig', newline='') as f:
+with open('../../PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
 
     with open('2020_dataset.csv', 'w', encoding='utf-8-sig', newline='') as f:

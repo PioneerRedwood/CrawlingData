@@ -54,7 +54,7 @@ for row19 in list_2019:
             equal_19.append(row19)
             break
 
-with open('avgs.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('../Analysis/Clustering/avgs.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     for i in range(0, len(equal_20)):
         if np.array_equal(equal_20[i][:3], equal_19[i][:3]):

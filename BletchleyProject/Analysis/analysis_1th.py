@@ -15,7 +15,7 @@ import csv
 import time
 
 brands = []
-with open('../DeprecatedFiles/2020_TotalPageDetail.csv', 'r', encoding='utf-8-sig') as f:
+with open('../DeprecatedCSVs/2020_TotalPageDetail.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.reader(f)
     i = 0
     for row in reader:
@@ -25,7 +25,7 @@ with open('../DeprecatedFiles/2020_TotalPageDetail.csv', 'r', encoding='utf-8-si
         else:
             brands.append(row[1])
 
-with open('../DeprecatedFiles/2019_TotalPageDetail.csv', 'r', encoding='utf-8-sig') as f:
+with open('../DeprecatedCSVs/2019_TotalPageDetail.csv', 'r', encoding='utf-8-sig') as f:
     reader = csv.reader(f)
     i = 0
     for row in reader:

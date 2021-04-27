@@ -1,10 +1,12 @@
-# csv 중복 제거
+"""
+csv 중복 제거
+"""
 import csv
 import os
 
 
 valid_brand_list = []
-with open('DeprecatedFiles/2020_PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig') as f:
+with open('DeprecatedCSVs/2020_PublicInfo_TotalData.csv', 'r', encoding='utf-8-sig') as f:
     brand_name_list = []
     reader = csv.reader(f)
     i = 0
