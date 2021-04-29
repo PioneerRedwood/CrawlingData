@@ -48,17 +48,17 @@ for header in headers:
 
 print('2020_ver_data: ', len(pages_2020), '2019_ver_data: ', len(pages_2019))
 
-with open('DeprecatedCSVs/2019_TotalPageDetail.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('정보공개서/2019_Company.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     for row in pages_2019:
         writer.writerow(row)
 
-with open('DeprecatedCSVs/2020_TotalPageDetail.csv', 'w', encoding='utf-8-sig', newline='') as f:
+with open('정보공개서/2020_Company.csv', 'w', encoding='utf-8-sig', newline='') as f:
     writer = csv.writer(f)
     for row in pages_2020:
         writer.writerow(row)
 
-print(os.stat('DeprecatedCSVs/2020_TotalPageDetail.csv').st_size)
-print(os.stat('DeprecatedCSVs/2019_TotalPageDetail.csv').st_size)
+print(os.stat('정보공개서/2020_Company.csv').st_size)
+print(os.stat('정보공개서/2019_Company.csv').st_size)
 
 print('gracefully complete')

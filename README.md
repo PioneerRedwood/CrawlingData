@@ -51,3 +51,7 @@ analysis_2nd.csv, analysis_2nd.py
 
 #### 2021.04.27. 대규모 리팩토링
 SemoYang이 데이터분류를 담당함
+
+### DB에 들어갈 최종 csv 파일 생성
+2021.04.29.
+MySql에 최종적으로 들어갈 브랜드 정보(FinalBrand)와 본사 정보(FinalHQ)가 만들어졌다.
