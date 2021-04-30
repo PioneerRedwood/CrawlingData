@@ -55,3 +55,7 @@ SemoYang이 데이터분류를 담당함
 ### DB에 들어갈 최종 csv 파일 생성
 2021.04.29.
 MySql에 최종적으로 들어갈 브랜드 정보(FinalBrand)와 본사 정보(FinalHQ)가 만들어졌다.
+
+2021.04.30
+전국 업종 위치 정보(FinalStoreAddress) 작업중 -- 같은 브랜드인데 업종을 다르게 넣은 경우가 있다(60계 -> 치킨, 한식)
+인구수(FinalPopulation) 생성 완료

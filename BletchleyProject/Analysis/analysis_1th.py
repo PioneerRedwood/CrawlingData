@@ -56,7 +56,7 @@ store_name_list = []
 #     for row in total_list:
 #         writer.writerow(row)
 
-with open('Total_City_Addresses.csv', 'r', encoding='utf-8-sig', newline='') as f:
+with open('../DeprecatedCSVs/Total_City_Addresses.csv', 'r', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f)
     for row in reader:
         total_list.append(row)
