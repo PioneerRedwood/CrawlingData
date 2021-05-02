@@ -57,5 +57,8 @@ SemoYang이 데이터분류를 담당함
 MySql에 최종적으로 들어갈 브랜드 정보(FinalBrand)와 본사 정보(FinalHQ)가 만들어졌다.
 
 2021.04.30
-전국 업종 위치 정보(FinalStoreAddress) 작업중 -- 같은 브랜드인데 업종을 다르게 넣은 경우가 있다(60계 -> 치킨, 한식)
+전국 점포 위치 정보(FinalStoreAddress) 작업중 -- 같은 브랜드인데 업종을 다르게 넣은 경우가 있다(60계 -> 치킨, 한식)
 인구수(FinalPopulation) 생성 완료
+
+2021.05.01
+마지막 점포 위치 정보(FinalStoreAddress_3.csv)가 생성됐다. 총 72,772개의 행. 생각보다 적은 수치다. 🤔
