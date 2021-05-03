@@ -74,7 +74,7 @@ FinalBrand 내 있는 실존 점포를 가져왔다.
 기존에는 이상했던 점포의 업종을
 브랜드에 등록된 업종의 이름으로
 모든 점포의 업종을 새로 부여했다
-FinalStoreAddress_3.csv -> 최종이 된다 💪
+FinalStoreAddress_3.csv 
 """
 brand_list = []
 with open('../../FinalBrand.csv', 'r', encoding='utf-8-sig', newline='') as f:
